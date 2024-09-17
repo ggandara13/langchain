@@ -12,35 +12,7 @@ import openai  # Import OpenAI for direct API usage
 import os
 import streamlit as st
 
-# Inject CSS for background and font color
-st.markdown(
-    """
-    <style>
-    /* Set background color to black */
-    body {
-        background-color: black;
-    }
-    
-    /* Set font color to white */
-    .stTextInput, .stMarkdown, .stTitle, .stHeader, .stSubheader, .stSuccess, .stInfo, .stError, .stWarning {
-        color: white;
-    }
 
-    /* Customize input box colors */
-    input, textarea {
-        color: white;
-        background-color: #333333;
-    }
-
-    /* Customize button appearance */
-    button {
-        color: white;
-        background-color: #444444;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
 
 
 # Fetch the API key from environment variables
@@ -111,8 +83,40 @@ def semantic_search_and_summarize(query, vectorstore):
 # Display Kizen banner
 st.image(banner_url, caption="Kizen - The Leader in ProGen AI", use_column_width=True)
 
-# Title of the app
-st.title("Article Search and Summarization")
+
+
+# Inject CSS for background and font color
+st.markdown(
+    """
+    <style>
+    /* Set background color to black */
+    body {
+        background-color: black;
+    }
+    
+    /* Set font color to white */
+    .stTextInput, .stMarkdown, .stTitle, .stHeader, .stSubheader, .stSuccess, .stInfo, .stError, .stWarning {
+        color: white;
+    }
+
+    /* Customize input box colors */
+    input, textarea {
+        color: white;
+        background-color: #333333;
+    }
+
+    /* Customize button appearance */
+    button {
+        color: white;
+        background-color: #444444;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+# Your Streamlit app code here
+st.title("-Article Search and Summarization-")
 
 # Input for user query
 query = st.text_input("Enter your query", "")
