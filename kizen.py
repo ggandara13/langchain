@@ -116,7 +116,7 @@ st.markdown(
 )
 
 # Your Streamlit app code here
-st.title("-Article Search and Summarization-")
+st.title("Article Search and Summarization-")
 
 # Input for user query
 query = st.text_input("Enter your query", "")
