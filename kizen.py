@@ -12,6 +12,37 @@ import openai  # Import OpenAI for direct API usage
 import os
 import streamlit as st
 
+# Inject CSS for background and font color
+st.markdown(
+    """
+    <style>
+    /* Set background color to black */
+    body {
+        background-color: black;
+    }
+    
+    /* Set font color to white */
+    .stTextInput, .stMarkdown, .stTitle, .stHeader, .stSubheader, .stSuccess, .stInfo, .stError, .stWarning {
+        color: white;
+    }
+
+    /* Customize input box colors */
+    input, textarea {
+        color: white;
+        background-color: #333333;
+    }
+
+    /* Customize button appearance */
+    button {
+        color: white;
+        background-color: #444444;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+
 # Fetch the API key from environment variables
 openai_api_key = os.getenv("OPENAI_API_KEY")
 
