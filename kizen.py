@@ -15,11 +15,9 @@ import streamlit as st
 # Fetch the API key from environment variables
 openai_api_key = os.getenv("OPENAI_API_KEY")
 
-# Check if API key is set
-if openai_api_key:
-    st.success(f"------>OpenAI API key found: {openai_api_key[:5]}...")  # Don't print the whole key for security reasons
-else:
-    st.error("**ALERT***: OpenAI API key is not set. Please configure it in GitHub Secrets.")
+# Check if API key is not set
+if not openai_api_key:
+    st.error("**ALERT**: OpenAI API key is not set. Please configure it in Streamlit Secrets or environment variables.")
 
 
 
