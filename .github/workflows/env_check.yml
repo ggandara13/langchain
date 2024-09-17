@@ -1,0 +1,22 @@
+name: Environment Variable Check
+
+on: [push, workflow_dispatch]
+
+jobs:
+  check-env-var:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+
+    - name: Install Python dependencies
+      run: pip install requests  # Add any other dependencies your script might need
+
+    - name: Check OpenAI API Key
+      env:
+        OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      run: python check_env.py
