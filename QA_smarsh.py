@@ -1,7 +1,6 @@
 import os
 import requests
 import tempfile
-from apikey import apikey
 
 import streamlit as st
 from langchain import OpenAI
@@ -11,7 +10,13 @@ from langchain.embeddings.openai import OpenAIEmbeddings
 from langchain.vectorstores import Chroma
 from langchain.chains import ConversationalRetrievalChain
 
-os.environ["OPENAI_API_KEY"] = apikey 
+# Fetch the API key from environment variables
+openai_api_key = os.getenv("OPENAI_API_KEY")
+
+# Check if API key is set
+if not openai_api_key:
+    st.error("ALERT: OpenAI API key is not set. Please configure it in GitHub Secrets.")
+
 
 def load_and_embed_document(url):
     st.info('Downloading and processing document...')
