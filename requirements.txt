@@ -147,4 +147,4 @@ wikipedia==1.4.0
 wrapt==1.16.0
 wsproto==1.2.0
 yarl==1.11.1
-PyPDF2==1.26.0  # Ensure to use the latest or required version
+PyPDF2==1.26.0
