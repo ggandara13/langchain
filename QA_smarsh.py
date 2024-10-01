@@ -23,11 +23,11 @@ if not openai_api_key:
 
 
 def load_and_embed_document(url):
-    st.info('Downloading and processing document...')
+    st.info('Downloading and processing document.....')
     response = requests.get(url)
     if response.status_code == 200:
         bytes_data = response.content
-        st.success('Document downloaded successfully!.')
+        st.success('---------Document downloaded successfully-------.')
     else:
         st.error('Failed to download the document. Please check the URL.')
         return None
