@@ -27,7 +27,7 @@ def load_and_embed_document(url):
     response = requests.get(url)
     if response.status_code == 200:
         bytes_data = response.content
-        st.success('Document downloaded successfully.')
+        st.success('Document downloaded successfully!.')
     else:
         st.error('Failed to download the document. Please check the URL.')
         return None
