@@ -13,6 +13,10 @@ from langchain.chains import ConversationalRetrievalChain
 # Fetch the API key from environment variables
 openai_api_key = os.getenv("OPENAI_API_KEY")
 
+__import__('pysqlite3')
+import sys
+sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
+
 # Check if API key is set
 if not openai_api_key:
     st.error("ALERT: OpenAI API key is not set. Please configure it in GitHub Secrets.")
