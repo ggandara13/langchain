@@ -3,7 +3,7 @@ import tempfile
 import streamlit as st
 import cloudinary
 import cloudinary.uploader
-from openai import OpenAI  # Use the latest OpenAI import
+from openai import OpenAI
 
 # Configuration for Cloudinary
 cloudinary.config(
@@ -56,6 +56,7 @@ The context of the image is data related to hotels, can be demand, revenue, stay
 
 # Streamlit UI code
 st.set_page_config(layout="wide")
+
 # Inject CSS for background and text colors
 st.markdown(
     """
@@ -69,7 +70,6 @@ st.markdown(
     }
     </style>
     """, unsafe_allow_html=True)
-
 
 # Insert the logo and title in the top row with two columns
 top_col1, top_col2 = st.columns([1, 4])
@@ -101,18 +101,28 @@ with col1:
 
 # Right Column: Button to get description and display result
 with col2:
-    if uploaded_file:
-        # Button to trigger OpenAI image description
-        if st.button("Perform Analysis"):
-            # Upload the image to Cloudinary and get a public URL
-            image_url = upload_image_to_cloudinary(temp_file.name)
+    if uploaded_file and st.button("Perform Analysis"):
+        # Upload the image to Cloudinary and get a public URL
+        image_url = upload_image_to_cloudinary(temp_file.name)
 
-            if image_url:
-                # Process the image using the `describe_image` function
-                description = describe_image(image_url)
+        if image_url:
+            # Process the image using the `describe_image` function
+            description = describe_image(image_url)
 
-                # Display the description below the button
-                st.text_area("Image Description", description, height=450)
+            # Save the description to session state to retain after button clicks
+            st.session_state['description'] = description
 
         # Clean up the temporary file after use
         os.unlink(temp_file.name)
+
+    # Display the description from session state (only if it exists)
+    if 'description' in st.session_state:
+        description = st.session_state['description']
+        st.markdown(f"**Image Description:**\n\n{description}")
+        st.download_button(
+            label="Dowload as Text",
+            data=description,
+            file_name="description.txt",
+            mime="text/plain",
+            key="download_button"
+        )
