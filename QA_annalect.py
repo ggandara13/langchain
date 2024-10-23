@@ -21,7 +21,7 @@ if not openai_api_key:
 llm = ChatOpenAI(model="gpt-4")
 
 # Function to find the most similar traffic sources using KNN based on aggregated Time on Page
-def find_similar_traffic_sources_by_traffic(df, n_similar=2):
+def find_similar_traffic_sources_by_traffic(df, n_similar=3):  # Default to 3
     traffic_source_col = 'Traffic Source'
     time_on_page_col = 'Time on Page'
     
@@ -95,7 +95,7 @@ def extract_number_from_question(question):
     match = re.search(r'(\d+)', question)
     if match:
         return int(match.group(1))
-    return 2  # Default to 2 if no number is specified
+    return 3  # Default to 3 if no number is specified
 
 # Create LangChain tools that the agent can use
 tools = [
