@@ -139,7 +139,7 @@ with col1:
 
 with col2:
     if df is not None:
-        question = st.text_input('Input your question for analyzing the table (e.g., "Give me the 3 most similar traffic sources")')
+        question = st.text_input('Input your question for analyzing the table (e.g., "For each traffic source, give me the 2 most similar traffic sources")')
 
         if st.button("Perform Analysis"):
             if question:
