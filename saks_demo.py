@@ -8,9 +8,6 @@ from transformers import AutoModel, AutoTokenizer
 from openai import OpenAI
 from sklearn.metrics.pairwise import cosine_similarity
 
-st.write(f"Torch version: {torch.__version__}")
-
-
 # Configuration for Cloudinary
 cloudinary.config(
     cloud_name="dmh9uua2k",
@@ -82,6 +79,7 @@ def get_sentence_embeddings(model, tokenizer, descriptions):
 
 # Streamlit UI code
 st.set_page_config(layout="wide")
+st.write(f"Torch version: {torch.__version__}")
 
 # Insert the logo and title in the top row with two columns
 top_col1, top_col2 = st.columns([1, 1.5])
