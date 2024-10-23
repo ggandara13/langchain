@@ -151,3 +151,4 @@ pypdf
 pysqlite3-binary
 cloudinary
 scikit-learn
+torch
