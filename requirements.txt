@@ -152,3 +152,4 @@ pysqlite3-binary
 cloudinary
 scikit-learn
 transformers
+torch
