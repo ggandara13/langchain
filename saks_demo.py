@@ -8,6 +8,9 @@ from transformers import AutoModel, AutoTokenizer
 from openai import OpenAI
 from sklearn.metrics.pairwise import cosine_similarity
 
+st.write(f"Torch version: {torch.__version__}")
+
+
 # Configuration for Cloudinary
 cloudinary.config(
     cloud_name="dmh9uua2k",
