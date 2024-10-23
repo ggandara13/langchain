@@ -4,6 +4,7 @@ import streamlit as st
 import cloudinary
 import cloudinary.uploader
 import pandas as pd
+import torch
 from transformers import AutoModel, AutoTokenizer
 from openai import OpenAI
 from sklearn.metrics.pairwise import cosine_similarity
