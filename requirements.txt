@@ -152,4 +152,4 @@ pysqlite3-binary
 cloudinary
 scikit-learn
 transformers
-torch
+torch==2.4.1
