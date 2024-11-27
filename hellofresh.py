@@ -354,7 +354,7 @@ df_recipes, df_visual = load_data(max_rows=10000)
 # Column 1: Display HelloFresh logo and GenAI Button
 with col1:
     st.image(load_logo(), caption="", use_column_width=True)
-    st.image(load_logo2(), caption="HelloFresh", use_column_width=True)
+    st.image(load_logo2(), caption="HelloFresh - a Prototype by Gerardo Gandara", use_column_width=True)
     
     
 
