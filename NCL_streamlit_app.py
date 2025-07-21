@@ -11,56 +11,84 @@ import json
 
 # Set page config
 st.set_page_config(
-    page_title="NCL Pricing Intelligence Platform",
+    page_title="Pricing Intelligence Platform",
     page_icon="🚢",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
-# Force light theme
+
+# Force light theme with better compatibility
 st.markdown("""
 <style>
-    /* Force light theme */
+    /* Force light theme for main app */
     .stApp {
-        background-color: white;
-        color: black;
+        background-color: #FFFFFF;
+        color: #262730;
     }
     
-    /* Metrics styling */
-    .stMetric {
-        background-color: #f0f2f6;
-        padding: 10px;
+    /* Fix metric containers */
+    [data-testid="metric-container"] {
+        background-color: #F0F2F6;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         border-radius: 5px;
-        margin: 5px;
-    }
-    .stMetric label {
-        color: #333 !important;
-    }
-    .stMetric [data-testid="metric-container"] {
-        color: #333 !important;
+        padding: 1rem;
     }
     
-    /* Headers and text */
-    h1, h2, h3, h4, h5, h6, p, span, div {
-        color: #333 !important;
+    /* Fix plotly charts background */
+    .js-plotly-plot .plotly .plot-container {
+        background-color: #FFFFFF !important;
     }
     
-    /* Sidebar */
-    .css-1d391kg {
-        background-color: #f5f5f5;
-    }
-    
-    /* Remove dark theme elements */
-    [data-testid="stSidebar"] {
-        background-color: #f5f5f5 !important;
+    /* Fix black boxes in plotly */
+    .js-plotly-plot .plotly .bg {
+        fill: #FFFFFF !important;
     }
     
     /* Ensure all text is dark */
-    .markdown-text-container {
-        color: #333 !important;
+    .stMarkdown, .stText, p, h1, h2, h3, h4, h5, h6 {
+        color: #262730 !important;
+    }
+    
+    /* Fix sidebar */
+    section[data-testid="stSidebar"] {
+        background-color: #F0F2F6 !important;
+    }
+    
+    /* Fix select boxes and inputs */
+    .stSelectbox > div > div {
+        background-color: #FFFFFF !important;
+        color: #262730 !important;
+    }
+    
+    /* Fix expander backgrounds */
+    .streamlit-expanderHeader {
+        background-color: #F0F2F6 !important;
+        color: #262730 !important;
+    }
+    
+    /* Fix code blocks */
+    .stCodeBlock {
+        background-color: #F5F5F5 !important;
+    }
+    
+    /* Override any dark theme remnants */
+    [data-testid="stHeader"] {
+        background-color: transparent !important;
+    }
+    
+    /* Fix dataframe styling */
+    .dataframe {
+        background-color: #FFFFFF !important;
+    }
+    
+    /* Fix tab containers */
+    .stTabs [data-baseweb="tab-list"] {
+        background-color: #F0F2F6 !important;
     }
 </style>
 """, unsafe_allow_html=True)
+
 
 # Title and intro with logo (left-aligned)
 col1, col2 = st.columns([1, 5])  # Adjust ratios to control alignment
