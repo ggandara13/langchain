@@ -10,7 +10,7 @@ import json
 
 # Set page config
 st.set_page_config(
-    page_title="    ----      Pricing Intelligence Platform",
+    page_title="Pricing Intelligence Platform ",
     page_icon="🚢",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -95,8 +95,8 @@ with col1:
         width=200
     )
 with col2:
-    st.title("Pricing Intelligence Platform")
-    st.markdown("**Prototype by Gerardo Gandara | Senior Data Scientist Interview**")
+    st.title("     Pricing Intelligence Platform")
+    st.markdown("     **Prototype by Gerardo Gandara | Senior Data Scientist Interview**")
     st.markdown("")
     st.markdown("")
     st.markdown("")
