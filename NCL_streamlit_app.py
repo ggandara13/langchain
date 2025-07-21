@@ -31,32 +31,73 @@ st.markdown("""
         color: #262730;
     }
     
-    /* Fix sidebar background */
-    section[data-testid="stSidebar"] {
-        background-color: #F0F2F6 !important;
-    }
-    
-    /* Fix sidebar selectbox specifically */
-    section[data-testid="stSidebar"] .stSelectbox > div > div {
+    /* Fix ALL selectboxes - both in sidebar and main content */
+    .stSelectbox > div > div {
         background-color: #FFFFFF !important;
         color: #0E1117 !important;
         border: 1px solid #D3D3D3 !important;
     }
     
-    /* Fix sidebar selectbox label */
-    section[data-testid="stSidebar"] .stSelectbox label {
+    /* Fix all selectbox labels */
+    .stSelectbox label {
         color: #0E1117 !important;
-        font-weight: 600 !important;
+        font-weight: 500 !important;
     }
     
-    /* Fix the dropdown arrow and input area */
-    section[data-testid="stSidebar"] [data-baseweb="select"] > div {
+    /* Fix all dropdown containers */
+    [data-baseweb="select"] {
         background-color: #FFFFFF !important;
     }
     
-    /* Fix dropdown text */
-    section[data-testid="stSidebar"] [data-baseweb="select"] * {
+    /* Fix dropdown input areas */
+    [data-baseweb="select"] > div {
+        background-color: #FFFFFF !important;
         color: #0E1117 !important;
+    }
+    
+    /* Fix dropdown menu that appears */
+    [data-baseweb="popover"] {
+        background-color: #FFFFFF !important;
+    }
+    
+    /* Fix dropdown menu list */
+    [data-baseweb="menu"] {
+        background-color: #FFFFFF !important;
+    }
+    
+    /* Fix dropdown options */
+    [role="option"] {
+        background-color: #FFFFFF !important;
+        color: #0E1117 !important;
+        padding: 8px 12px !important;
+    }
+    
+    /* Hover state for options */
+    [role="option"]:hover {
+        background-color: #F0F2F6 !important;
+        color: #0E1117 !important;
+    }
+    
+    /* Selected option highlight */
+    [aria-selected="true"] {
+        background-color: #E6F3FF !important;
+        color: #0E1117 !important;
+    }
+    
+    /* Fix any black backgrounds in selects */
+    div[data-baseweb="select"] div {
+        background-color: #FFFFFF !important;
+        color: #0E1117 !important;
+    }
+    
+    /* Force all text in dropdowns to be dark */
+    .stSelectbox * {
+        color: #0E1117 !important;
+    }
+    
+    /* Fix sidebar specific styling */
+    section[data-testid="stSidebar"] {
+        background-color: #F0F2F6 !important;
     }
     
     /* Fix metric containers */
@@ -68,23 +109,11 @@ st.markdown("""
         border: 1px solid #E0E0E0;
     }
     
-    /* Target metric label */
-    [data-testid="metric-container"] label {
-        color: #555555 !important;
-        font-weight: 500 !important;
-        font-size: 0.75rem !important;
-    }
-    
-    /* Target metric value */
+    /* Target metric values */
     [data-testid="metric-container"] [data-testid="stMetricValue"] {
         color: #0E1117 !important;
         font-weight: 600 !important;
         font-size: 0.875rem !important;
-    }
-    
-    /* Force all text in metrics to be dark */
-    div[data-testid="metric-container"] * {
-        color: #0E1117 !important;
     }
     
     /* Fix code blocks */
@@ -95,28 +124,6 @@ st.markdown("""
         border-radius: 6px !important;
     }
     
-    /* Fix all selectbox dropdowns */
-    .stSelectbox [data-baseweb="select"] {
-        background-color: #FFFFFF !important;
-    }
-    
-    /* Fix dropdown menu */
-    [data-baseweb="menu"] {
-        background-color: #FFFFFF !important;
-    }
-    
-    /* Fix dropdown options */
-    [role="option"] {
-        background-color: #FFFFFF !important;
-        color: #0E1117 !important;
-    }
-    
-    /* Hover state */
-    [role="option"]:hover {
-        background-color: #E6F3FF !important;
-        color: #0E1117 !important;
-    }
-    
     /* Fix expander styling */
     .streamlit-expanderHeader {
         background-color: #F8F9FA !important;
@@ -124,8 +131,6 @@ st.markdown("""
         border: 1px solid #E0E0E0 !important;
         border-radius: 8px !important;
         padding: 0.5rem 0.75rem !important;
-        font-weight: 500 !important;
-        font-size: 0.9rem !important;
     }
     
     /* Global text color override */
@@ -141,6 +146,14 @@ st.markdown("""
     /* Keep checkmark green */
     [data-testid="stMetricValue"] svg {
         color: #21c354 !important;
+    }
+    
+    /* Additional force for any remaining black elements */
+    [style*="background-color: black"],
+    [style*="background-color: rgb(0, 0, 0)"],
+    [style*="background: black"],
+    [style*="background: rgb(0, 0, 0)"] {
+        background-color: #FFFFFF !important;
     }
 </style>
 """, unsafe_allow_html=True)
