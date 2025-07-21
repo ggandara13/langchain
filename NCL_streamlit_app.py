@@ -272,28 +272,54 @@ if selected_module == "Executive Dashboard":
         'Elasticity': [-0.012, 0.821, 0.516, 0.132, 0.587],
         'Interpretation': ['Inelastic', 'Elastic', 'Elastic', 'Inelastic', 'Elastic']
     })
+
     
     fig = px.bar(elasticity_data, x='Cruise Line', y='Elasticity', color='Interpretation',
                  title="Price Elasticity Comparison",
                  color_discrete_map={'Elastic': 'red', 'Inelastic': 'green'})
     
-    # Add this to fix the black background
+    # Add this to fix the black background and ensure ALL text is visible
     fig.update_layout(
         plot_bgcolor='white',
         paper_bgcolor='white',
-        font=dict(color='#262730'),  # Darker gray for better contrast
+        font=dict(color='#262730', size=12),
         xaxis=dict(
             gridcolor='#E5E5E5',
-            title_font=dict(color='#262730'),
-            tickfont=dict(color='#262730')
+            title_font=dict(color='#262730', size=14),
+            tickfont=dict(color='#262730', size=12),
+            linecolor='#262730'
         ),
         yaxis=dict(
-            gridcolor='#E5E5E5',
-            title_font=dict(color='#262730'),
-            tickfont=dict(color='#262730')
+            gridcolor='#E5E5E5', 
+            title_font=dict(color='#262730', size=14),
+            tickfont=dict(color='#262730', size=12),
+            linecolor='#262730'
         ),
-        title_font=dict(color='#262730')
+        title_font=dict(color='#262730', size=16),
+        showlegend=True,
+        legend=dict(
+            bgcolor='rgba(255, 255, 255, 0.9)',  # White background with slight transparency
+            bordercolor='#262730',
+            borderwidth=1,
+            font=dict(color='#262730', size=12),  # Ensure legend text is dark
+            title=dict(
+                text='Interpretation',
+                font=dict(color='#262730', size=12)
+            )
+        )
     )
+    
+    # Also update the traces to ensure hover text is visible
+    fig.update_traces(
+        textfont=dict(color='#262730'),
+        hoverlabel=dict(
+            bgcolor="white",
+            font_size=12,
+            font_family="Arial",
+            font_color="#262730"
+        )
+    )
+
 
 
     
