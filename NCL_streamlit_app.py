@@ -36,7 +36,7 @@ st.markdown("""
         background-color: #F0F2F6;
         box-shadow: 0 1px 3px rgba(0,0,0,0.12);
         border-radius: 8px;
-        padding: 0.75rem;
+        padding: 0.5rem;
         border: 1px solid #E0E0E0;
     }
     
@@ -44,20 +44,58 @@ st.markdown("""
     [data-testid="metric-container"] label {
         color: #555555 !important;
         font-weight: 500 !important;
-        font-size: 0.875rem !important;
+        font-size: 0.75rem !important;
     }
     
-    /* Target metric value - REDUCE FONT SIZE */
+    /* Target metric value - SMALLER FONT SIZE */
     [data-testid="metric-container"] [data-testid="stMetricValue"] {
         color: #0E1117 !important;
         font-weight: 600 !important;
-        font-size: 1.25rem !important;  /* Reduced from default */
+        font-size: 1rem !important;  /* Even smaller */
     }
     
-    /* Fix metric value div specifically */
-    [data-testid="metric-container"] > div > div[data-testid="stMetricValue"] > div {
-        font-size: 1.25rem !important;
+    /* Additional targeting for metric value text */
+    [data-testid="metric-container"] [data-testid="stMetricValue"] > div {
+        font-size: 1rem !important;
+        line-height: 1.2 !important;
+    }
+    
+    /* Specific fix for the stage name that appears cut off */
+    div[data-testid="column"] [data-testid="metric-container"]:first-child [data-testid="stMetricValue"] {
+        font-size: 0.9rem !important;
+        white-space: normal !important;
+        word-wrap: break-word !important;
+    }
+    
+    /* Fix code blocks - CRITICAL FIX */
+    .stCodeBlock, pre, code {
+        background-color: #F5F5F5 !important;
         color: #0E1117 !important;
+        border: 1px solid #E0E0E0 !important;
+        border-radius: 6px !important;
+    }
+    
+    /* Fix code inside expanders specifically */
+    div[data-testid="stExpander"] .stCodeBlock {
+        background-color: #F5F5F5 !important;
+        color: #0E1117 !important;
+    }
+    
+    /* Fix pre and code tags */
+    pre {
+        background-color: #F5F5F5 !important;
+        color: #0E1117 !important;
+        padding: 1rem !important;
+    }
+    
+    code {
+        background-color: #F5F5F5 !important;
+        color: #0E1117 !important;
+    }
+    
+    /* Fix syntax highlighting in code blocks */
+    .stCodeBlock * {
+        background-color: transparent !important;
     }
     
     /* Fix selectbox dropdown menu */
@@ -87,31 +125,15 @@ st.markdown("""
         color: #0E1117 !important;
     }
     
-    /* Selected option */
-    [aria-selected="true"] {
-        background-color: #E0E0E0 !important;
-        color: #0E1117 !important;
-    }
-    
-    /* Fix the select box input */
-    .stSelectbox > div > div > div {
-        background-color: #FFFFFF !important;
-        color: #0E1117 !important;
-    }
-    
-    /* Ensure all select box text is visible */
-    .stSelectbox * {
-        color: #0E1117 !important;
-    }
-    
     /* Fix expander styling */
     .streamlit-expanderHeader {
         background-color: #F8F9FA !important;
         color: #0E1117 !important;
         border: 1px solid #E0E0E0 !important;
         border-radius: 8px !important;
-        padding: 0.75rem 1rem !important;
+        padding: 0.5rem 0.75rem !important;
         font-weight: 500 !important;
+        font-size: 0.9rem !important;
     }
     
     /* Expander content area */
@@ -135,16 +157,6 @@ st.markdown("""
     /* Ensure all text is dark */
     .stMarkdown, .stText, p, h1, h2, h3, h4, h5, h6 {
         color: #262730 !important;
-    }
-    
-    /* Fix any remaining white text issues */
-    div, span, p {
-        color: #0E1117 !important;
-    }
-    
-    /* But keep buttons and special elements their intended colors */
-    .stButton > button {
-        color: white !important;
     }
     
     /* Success checkmark should stay green */
