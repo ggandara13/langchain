@@ -18,6 +18,7 @@ st.set_page_config(
 
 
 
+
 # Force light theme with better compatibility
 st.markdown("""
 <style>
@@ -27,32 +28,60 @@ st.markdown("""
         color: #262730;
     }
     
-    /* Fix metric containers */
+    /* Fix metric containers - more specific targeting */
     [data-testid="metric-container"] {
         background-color: #F0F2F6;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-        border-radius: 5px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+        border-radius: 8px;
         padding: 1rem;
+        border: 1px solid #E0E0E0;
     }
     
-    /* Fix metric labels specifically */
-    [data-testid="metric-container"] > div:first-child {
+    /* Target metric label (Stage, Duration, Status) */
+    [data-testid="metric-container"] label {
+        color: #555555 !important;
+        font-weight: 500 !important;
+    }
+    
+    /* Target metric value (the main text like "1. Problem Defini") */
+    [data-testid="metric-container"] [data-testid="stMetricValue"] {
+        color: #0E1117 !important;
+        font-weight: 600 !important;
+    }
+    
+    /* Target metric delta (the small text below) */
+    [data-testid="metric-container"] [data-testid="stMetricDelta"] {
         color: #555555 !important;
     }
     
-    /* Fix metric values */
-    [data-testid="metric-container"] > div:nth-child(2) {
-        color: #262730 !important;
+    /* Additional targeting for metric text */
+    div[data-testid="metric-container"] p {
+        color: #0E1117 !important;
     }
     
-    /* Fix metric delta */
-    [data-testid="metric-container"] > div:nth-child(3) {
-        color: #262730 !important;
+    /* Force all text in metrics to be dark */
+    div[data-testid="metric-container"] div {
+        color: #0E1117 !important;
     }
     
-    /* Alternative approach for all metric text */
-    div[data-testid="metric-container"] * {
-        color: #262730 !important;
+    /* Fix expander styling */
+    .streamlit-expanderHeader {
+        background-color: #F8F9FA !important;
+        color: #0E1117 !important;
+        border: 1px solid #E0E0E0 !important;
+        border-radius: 8px !important;
+        padding: 0.75rem 1rem !important;
+        font-weight: 500 !important;
+    }
+    
+    /* Expander content area */
+    div[data-testid="stExpander"] div[role="region"] {
+        border: 1px solid #E0E0E0 !important;
+        border-top: none !important;
+        background-color: #FAFAFA !important;
+        padding: 1rem !important;
+        border-bottom-left-radius: 8px !important;
+        border-bottom-right-radius: 8px !important;
     }
     
     /* Fix plotly charts background */
@@ -73,6 +102,7 @@ st.markdown("""
     /* Fix sidebar */
     section[data-testid="stSidebar"] {
         background-color: #F0F2F6 !important;
+        border-right: 1px solid #E0E0E0 !important;
     }
     
     /* Fix sidebar text */
@@ -80,49 +110,52 @@ st.markdown("""
         color: #262730 !important;
     }
     
-    /* Fix select boxes and inputs */
+    /* Fix select boxes */
     .stSelectbox > div > div {
         background-color: #FFFFFF !important;
         color: #262730 !important;
+        border: 1px solid #E0E0E0 !important;
     }
     
     /* Fix select box labels */
     .stSelectbox label {
         color: #262730 !important;
-    }
-    
-    /* Fix expander backgrounds */
-    .streamlit-expanderHeader {
-        background-color: #F0F2F6 !important;
-        color: #262730 !important;
+        font-weight: 500 !important;
     }
     
     /* Fix code blocks */
     .stCodeBlock {
         background-color: #F5F5F5 !important;
-    }
-    
-    /* Override any dark theme remnants */
-    [data-testid="stHeader"] {
-        background-color: transparent !important;
+        border: 1px solid #E0E0E0 !important;
+        border-radius: 6px !important;
     }
     
     /* Fix dataframe styling */
     .dataframe {
         background-color: #FFFFFF !important;
+        border: 1px solid #E0E0E0 !important;
     }
     
-    /* Fix tab containers */
-    .stTabs [data-baseweb="tab-list"] {
-        background-color: #F0F2F6 !important;
-    }
-    
-    /* Ensure all labels are visible */
-    label {
+    /* Additional fallback for any white text */
+    * {
         color: #262730 !important;
+    }
+    
+    /* But keep specific elements their intended colors */
+    .stButton > button {
+        color: white !important;
+    }
+    
+    /* Success checkmark should stay green */
+    [data-testid="stMetricValue"] svg {
+        color: #21c354 !important;
     }
 </style>
 """, unsafe_allow_html=True)
+
+
+
+
 
 
 # Title and intro with logo (left-aligned)
