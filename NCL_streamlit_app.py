@@ -19,6 +19,9 @@ st.set_page_config(
 
 
 
+
+
+
 # Force light theme with better compatibility
 st.markdown("""
 <style>
@@ -28,39 +31,76 @@ st.markdown("""
         color: #262730;
     }
     
-    /* Fix metric containers - more specific targeting */
+    /* Fix metric containers */
     [data-testid="metric-container"] {
         background-color: #F0F2F6;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+        box-shadow: 0 1px 3px rgba(0,0,0,0.12);
         border-radius: 8px;
-        padding: 1rem;
+        padding: 0.75rem;
         border: 1px solid #E0E0E0;
     }
     
-    /* Target metric label (Stage, Duration, Status) */
+    /* Target metric label */
     [data-testid="metric-container"] label {
         color: #555555 !important;
         font-weight: 500 !important;
+        font-size: 0.875rem !important;
     }
     
-    /* Target metric value (the main text like "1. Problem Defini") */
+    /* Target metric value - REDUCE FONT SIZE */
     [data-testid="metric-container"] [data-testid="stMetricValue"] {
         color: #0E1117 !important;
         font-weight: 600 !important;
+        font-size: 1.25rem !important;  /* Reduced from default */
     }
     
-    /* Target metric delta (the small text below) */
-    [data-testid="metric-container"] [data-testid="stMetricDelta"] {
-        color: #555555 !important;
-    }
-    
-    /* Additional targeting for metric text */
-    div[data-testid="metric-container"] p {
+    /* Fix metric value div specifically */
+    [data-testid="metric-container"] > div > div[data-testid="stMetricValue"] > div {
+        font-size: 1.25rem !important;
         color: #0E1117 !important;
     }
     
-    /* Force all text in metrics to be dark */
-    div[data-testid="metric-container"] div {
+    /* Fix selectbox dropdown menu */
+    .stSelectbox [data-baseweb="select"] {
+        background-color: #FFFFFF !important;
+    }
+    
+    /* Fix dropdown options */
+    [data-baseweb="menu"] {
+        background-color: #FFFFFF !important;
+    }
+    
+    /* Fix dropdown list items */
+    [role="listbox"] {
+        background-color: #FFFFFF !important;
+    }
+    
+    /* Fix individual dropdown options */
+    [role="option"] {
+        background-color: #FFFFFF !important;
+        color: #0E1117 !important;
+    }
+    
+    /* Hover state for dropdown options */
+    [role="option"]:hover {
+        background-color: #F0F2F6 !important;
+        color: #0E1117 !important;
+    }
+    
+    /* Selected option */
+    [aria-selected="true"] {
+        background-color: #E0E0E0 !important;
+        color: #0E1117 !important;
+    }
+    
+    /* Fix the select box input */
+    .stSelectbox > div > div > div {
+        background-color: #FFFFFF !important;
+        color: #0E1117 !important;
+    }
+    
+    /* Ensure all select box text is visible */
+    .stSelectbox * {
         color: #0E1117 !important;
     }
     
@@ -80,29 +120,11 @@ st.markdown("""
         border-top: none !important;
         background-color: #FAFAFA !important;
         padding: 1rem !important;
-        border-bottom-left-radius: 8px !important;
-        border-bottom-right-radius: 8px !important;
-    }
-    
-    /* Fix plotly charts background */
-    .js-plotly-plot .plotly .plot-container {
-        background-color: #FFFFFF !important;
-    }
-    
-    /* Fix black boxes in plotly */
-    .js-plotly-plot .plotly .bg {
-        fill: #FFFFFF !important;
-    }
-    
-    /* Ensure all text is dark */
-    .stMarkdown, .stText, p, h1, h2, h3, h4, h5, h6 {
-        color: #262730 !important;
     }
     
     /* Fix sidebar */
     section[data-testid="stSidebar"] {
         background-color: #F0F2F6 !important;
-        border-right: 1px solid #E0E0E0 !important;
     }
     
     /* Fix sidebar text */
@@ -110,38 +132,17 @@ st.markdown("""
         color: #262730 !important;
     }
     
-    /* Fix select boxes */
-    .stSelectbox > div > div {
-        background-color: #FFFFFF !important;
-        color: #262730 !important;
-        border: 1px solid #E0E0E0 !important;
-    }
-    
-    /* Fix select box labels */
-    .stSelectbox label {
-        color: #262730 !important;
-        font-weight: 500 !important;
-    }
-    
-    /* Fix code blocks */
-    .stCodeBlock {
-        background-color: #F5F5F5 !important;
-        border: 1px solid #E0E0E0 !important;
-        border-radius: 6px !important;
-    }
-    
-    /* Fix dataframe styling */
-    .dataframe {
-        background-color: #FFFFFF !important;
-        border: 1px solid #E0E0E0 !important;
-    }
-    
-    /* Additional fallback for any white text */
-    * {
+    /* Ensure all text is dark */
+    .stMarkdown, .stText, p, h1, h2, h3, h4, h5, h6 {
         color: #262730 !important;
     }
     
-    /* But keep specific elements their intended colors */
+    /* Fix any remaining white text issues */
+    div, span, p {
+        color: #0E1117 !important;
+    }
+    
+    /* But keep buttons and special elements their intended colors */
     .stButton > button {
         color: white !important;
     }
