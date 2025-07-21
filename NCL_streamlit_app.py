@@ -67,8 +67,7 @@ col1, col2 = st.columns([1, 5])  # Adjust ratios to control alignment
 with col1:
     st.image(
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFIOLSxBNUYVqchXTA0cdeQps44W2Tba82jQ&s",
-        width=200,
-        use_container_width=False
+        width=200
     )
 
 with col2:
