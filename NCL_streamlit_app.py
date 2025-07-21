@@ -205,10 +205,19 @@ if selected_module == "Executive Dashboard":
     
     with col1:
         # Scatter plot from your analysis
+
         fig = px.scatter(df, x='discount', y='final_price', color='cruise_line',
-                        title="Price vs Discount Strategy by Cruise Line",
-                        labels={'discount': 'Discount %', 'final_price': 'Final Price ($)'},
-                        size='occupancy', hover_data=['ship'])
+                title="Price vs Discount Strategy by Cruise Line",
+                labels={'discount': 'Discount %', 'final_price': 'Final Price ($)'},
+                size='occupancy', hover_data=['ship'])
+
+        # Add this to fix the black background
+        (
+            plot_bgcolor='white',
+            paper_bgcolor='white',
+            font=dict(color='black')
+        )
+
         
         # Add zones
         fig.add_shape(type="rect", x0=0, x1=0.3, y0=1200, y1=1600,
@@ -253,6 +262,16 @@ if selected_module == "Executive Dashboard":
     fig = px.bar(elasticity_data, x='Cruise Line', y='Elasticity', color='Interpretation',
                  title="Price Elasticity Comparison",
                  color_discrete_map={'Elastic': 'red', 'Inelastic': 'green'})
+
+    # Add this to fix the black background
+    (
+        plot_bgcolor='white',
+        paper_bgcolor='white',
+        font=dict(color='black')
+    )
+
+
+    
     st.plotly_chart(fig, use_container_width=True)
 
 # Module 2: Model Lifecycle Demo
@@ -513,8 +532,18 @@ if y_train.unique().size == 1:
                             y=feature_importance['Classification_Importance'][:6]))
         fig.add_trace(go.Bar(name='Regression', x=feature_importance['Feature'][:6], 
                             y=feature_importance['Regression_Importance'][:6]))
-        fig.update_layout(title='Top 6 Feature Importance by Model Type',
+        (title='Top 6 Feature Importance by Model Type',
                          xaxis_title='Feature', yaxis_title='Importance Score')
+
+
+        # Add this to fix the black background
+        (
+            plot_bgcolor='white',
+            paper_bgcolor='white',
+            font=dict(color='black')
+        )
+
+
         st.plotly_chart(fig, use_container_width=True)
         
         # Model performance metrics
@@ -835,6 +864,14 @@ else:  # A/B Testing
     # Add vertical line
     fig.add_vline(x=test_duration/2, line_dash="dash", 
                   annotation_text="Treatment Start")
+
+
+    # Add this to fix the black background
+    (
+        plot_bgcolor='white',
+        paper_bgcolor='white',
+        font=dict(color='black')
+    )
     
     st.plotly_chart(fig, use_container_width=True)
     
