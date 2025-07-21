@@ -88,18 +88,21 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Title and intro with logo (left-aligned)
-col1, col2 = st.columns([1, 5])  # Adjust ratios to control alignment
-with col1:
+# Logo and Title (vertically stacked)
+# Center the logo
+col1, col2, col3 = st.columns([1, 2, 1])
+with col2:
     st.image(
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFIOLSxBNUYVqchXTA0cdeQps44W2Tba82jQ&s",
-        width=200
+        width=300
     )
-with col2:
-    st.title("      - Pricing Intelligence Platform")
-    st.markdown("     **Prototype by Gerardo Gandara | Senior Data Scientist Interview**")
-    st.markdown("")
-    st.markdown("")
-    st.markdown("")
+
+# Title and subtitle below the logo
+st.title("🚢 NCL Pricing Intelligence Platform")
+st.markdown("**Prototype by Gerardo Gandara | Senior Data Scientist Interview**")
+st.markdown("---")  # Add a horizontal line for separation
+
+
 
 # Sidebar navigation
 st.sidebar.header("Platform Modules")
