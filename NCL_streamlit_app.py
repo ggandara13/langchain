@@ -16,6 +16,8 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
+
+
 # Force light theme with better compatibility
 st.markdown("""
 <style>
@@ -31,6 +33,26 @@ st.markdown("""
         box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         border-radius: 5px;
         padding: 1rem;
+    }
+    
+    /* Fix metric labels specifically */
+    [data-testid="metric-container"] > div:first-child {
+        color: #555555 !important;
+    }
+    
+    /* Fix metric values */
+    [data-testid="metric-container"] > div:nth-child(2) {
+        color: #262730 !important;
+    }
+    
+    /* Fix metric delta */
+    [data-testid="metric-container"] > div:nth-child(3) {
+        color: #262730 !important;
+    }
+    
+    /* Alternative approach for all metric text */
+    div[data-testid="metric-container"] * {
+        color: #262730 !important;
     }
     
     /* Fix plotly charts background */
@@ -53,9 +75,19 @@ st.markdown("""
         background-color: #F0F2F6 !important;
     }
     
+    /* Fix sidebar text */
+    section[data-testid="stSidebar"] * {
+        color: #262730 !important;
+    }
+    
     /* Fix select boxes and inputs */
     .stSelectbox > div > div {
         background-color: #FFFFFF !important;
+        color: #262730 !important;
+    }
+    
+    /* Fix select box labels */
+    .stSelectbox label {
         color: #262730 !important;
     }
     
@@ -84,8 +116,14 @@ st.markdown("""
     .stTabs [data-baseweb="tab-list"] {
         background-color: #F0F2F6 !important;
     }
+    
+    /* Ensure all labels are visible */
+    label {
+        color: #262730 !important;
+    }
 </style>
 """, unsafe_allow_html=True)
+
 
 # Title and intro with logo (left-aligned)
 # Logo and Title (vertically stacked)
