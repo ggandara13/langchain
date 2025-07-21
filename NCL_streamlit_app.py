@@ -10,7 +10,7 @@ import json
 
 # Set page config
 st.set_page_config(
-    page_title="          Pricing Intelligence Platform",
+    page_title="    ----      Pricing Intelligence Platform",
     page_icon="🚢",
     layout="wide",
     initial_sidebar_state="expanded"
