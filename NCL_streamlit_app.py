@@ -1071,7 +1071,6 @@ st.markdown("""
 2. **Production deployment** - Real models in production via Jenkins
 3. **Causal inference expertise** - DiD from daily work at Zimmerman  
 4. **Business translation** - Converting technical results to revenue impact
-5. **Learning agility** - Built this in 24 hours after our first call
 
 Contact: gerardo.gandara@gmail.com | https://www.linkedin.com/in/gerardo-gandara
 """)
