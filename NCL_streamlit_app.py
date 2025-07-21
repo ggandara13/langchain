@@ -1,6 +1,5 @@
 # NCL Dynamic Pricing Platform - Senior DS Interview Demo
 # streamlit_app.py
-
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -16,7 +15,6 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded"
 )
-
 
 # Force light theme with better compatibility
 st.markdown("""
@@ -89,7 +87,6 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-
 # Title and intro with logo (left-aligned)
 col1, col2 = st.columns([1, 5])  # Adjust ratios to control alignment
 with col1:
@@ -97,10 +94,9 @@ with col1:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFIOLSxBNUYVqchXTA0cdeQps44W2Tba82jQ&s",
         width=200
     )
-
 with col2:
-    st.title("🚢 NCL Pricing Intelligence Platform")
-    st.markdown("**Prototype by Gerardo Gandara | Senior Data Scientist Interview")
+    st.title("Pricing Intelligence Platform")
+    st.markdown("**Prototype by Gerardo Gandara | Senior Data Scientist Interview**")
     st.markdown("")
     st.markdown("")
     st.markdown("")
@@ -205,19 +201,17 @@ if selected_module == "Executive Dashboard":
     
     with col1:
         # Scatter plot from your analysis
-
         fig = px.scatter(df, x='discount', y='final_price', color='cruise_line',
-                title="Price vs Discount Strategy by Cruise Line",
-                labels={'discount': 'Discount %', 'final_price': 'Final Price ($)'},
-                size='occupancy', hover_data=['ship'])
-
+                        title="Price vs Discount Strategy by Cruise Line",
+                        labels={'discount': 'Discount %', 'final_price': 'Final Price ($)'},
+                        size='occupancy', hover_data=['ship'])
+        
         # Add this to fix the black background
-        (
+        fig.update_layout(
             plot_bgcolor='white',
             paper_bgcolor='white',
             font=dict(color='black')
         )
-
         
         # Add zones
         fig.add_shape(type="rect", x0=0, x1=0.3, y0=1200, y1=1600,
@@ -262,15 +256,13 @@ if selected_module == "Executive Dashboard":
     fig = px.bar(elasticity_data, x='Cruise Line', y='Elasticity', color='Interpretation',
                  title="Price Elasticity Comparison",
                  color_discrete_map={'Elastic': 'red', 'Inelastic': 'green'})
-
+    
     # Add this to fix the black background
-    (
+    fig.update_layout(
         plot_bgcolor='white',
         paper_bgcolor='white',
         font=dict(color='black')
     )
-
-
     
     st.plotly_chart(fig, use_container_width=True)
 
@@ -295,13 +287,12 @@ elif selected_module == "Model Lifecycle Demo":
             "details": """Week 1: EDA on multiple tables, identified group commit table
 Week 2: SQL query development, tested on 1→100 properties  
 Week 3: Parallel processing for 10K properties (8hrs→45min)
-
 🚀 MAJOR OPTIMIZATION (v0.0.2):
-• Database Throughput: 4,470 rows/second (1000x improvement)
-• Batch Processing: Single bulk operations vs thousands of individual INSERTs
-• Transient Tables: Eliminated connection overhead
-• Processing Time: 602 properties in 39.7 minutes (91.4% success rate)
-• Production Scale: Successfully deployed for 7K+ Marriott properties"""
+- Database Throughput: 4,470 rows/second (1000x improvement)
+- Batch Processing: Single bulk operations vs thousands of individual INSERTs
+- Transient Tables: Eliminated connection overhead
+- Processing Time: 602 properties in 39.7 minutes (91.4% success rate)
+- Production Scale: Successfully deployed for 7K+ Marriott properties"""
         },
         "3. Model Development": {
             "description": "Two-stage hybrid ML approach: Classification + Regression with time series ensemble",
@@ -310,31 +301,27 @@ Week 3: Parallel processing for 10K properties (8hrs→45min)
             "details": """🎯 TWO-STAGE MODELING APPROACH:
 Stage 1 - Classification: Predicts if significant change (>10%) will occur
 Stage 2 - Regression: Predicts materialization rate (0-150%)
-
 📊 FEATURE ENGINEERING:
-• 28 engineered features capturing commitment volatility patterns
-• Key features: lead_time, commitment_ratio, relative_change_from_first, 
+- 28 engineered features capturing commitment volatility patterns
+- Key features: lead_time, commitment_ratio, relative_change_from_first, 
   min/max_commit_so_far, pct_change_volatility, recent_trend
-• Adaptive simplification: 4 levels (28→9 features) based on data availability
-• Handles missing evolution data with pattern-based imputation
-
+- Adaptive simplification: 4 levels (28→9 features) based on data availability
+- Handles missing evolution data with pattern-based imputation
 🔧 MODEL ARCHITECTURE:
-• XGBoost with early stopping (50 rounds)
-• Chronological validation to prevent data leakage
-• Handles edge cases: single-class scenarios, missing data
-• Hybrid ensemble: 70% XGBoost + 30% time series (Prophet/ARIMA)
-
+- XGBoost with early stopping (50 rounds)
+- Chronological validation to prevent data leakage
+- Handles edge cases: single-class scenarios, missing data
+- Hybrid ensemble: 70% XGBoost + 30% time series (Prophet/ARIMA)
 📈 PERFORMANCE METRICS:
-• Classification F1: 0.82 (Precision: 0.85, Recall: 0.79)
-• Regression MAPE: 4.2% (RMSE: 0.056, MAE: 0.041)
-• Feature importance: top 5 features = 65% of model importance
-• Validation: Last 10% of chronological data (adaptive sizing)
-
+- Classification F1: 0.82 (Precision: 0.85, Recall: 0.79)
+- Regression MAPE: 4.2% (RMSE: 0.056, MAE: 0.041)
+- Feature importance: top 5 features = 65% of model importance
+- Validation: Last 10% of chronological data (adaptive sizing)
 🚀 KEY INNOVATIONS:
-• Two-stage approach reduces false positives by 40%
-• Feature reduction maintains 98% accuracy with 68% fewer features
-• Ensemble method improves edge case predictions by 15%
-• Production-ready with fallback models for insufficient data"""
+- Two-stage approach reduces false positives by 40%
+- Feature reduction maintains 98% accuracy with 68% fewer features
+- Ensemble method improves edge case predictions by 15%
+- Production-ready with fallback models for insufficient data"""
         },
         "4. Validation": {
             "description": "Backtesting, cross-validation, pilot with 20 properties",
@@ -532,18 +519,16 @@ if y_train.unique().size == 1:
                             y=feature_importance['Classification_Importance'][:6]))
         fig.add_trace(go.Bar(name='Regression', x=feature_importance['Feature'][:6], 
                             y=feature_importance['Regression_Importance'][:6]))
-        (title='Top 6 Feature Importance by Model Type',
-                         xaxis_title='Feature', yaxis_title='Importance Score')
-
-
-        # Add this to fix the black background
-        (
+        
+        fig.update_layout(
+            title='Top 6 Feature Importance by Model Type',
+            xaxis_title='Feature', 
+            yaxis_title='Importance Score',
             plot_bgcolor='white',
             paper_bgcolor='white',
             font=dict(color='black')
         )
-
-
+        
         st.plotly_chart(fig, use_container_width=True)
         
         # Model performance metrics
@@ -796,12 +781,12 @@ RETURNS FLOAT
 LANGUAGE PYTHON
 RUNTIME_VERSION = '3.8'
 HANDLER = 'optimize_price'
-AS $
+AS $$
 def optimize_price(current_price, occupancy, elasticity):
     target_occupancy = 0.85
     price_multiplier = (target_occupancy / occupancy) ** (1/elasticity)
     return current_price * price_multiplier
-$;
+$$;
 
 -- Usage in SQL
 SELECT 
@@ -864,10 +849,9 @@ else:  # A/B Testing
     # Add vertical line
     fig.add_vline(x=test_duration/2, line_dash="dash", 
                   annotation_text="Treatment Start")
-
-
+    
     # Add this to fix the black background
-    (
+    fig.update_layout(
         plot_bgcolor='white',
         paper_bgcolor='white',
         font=dict(color='black')
@@ -933,13 +917,11 @@ st.markdown("---")
 st.markdown("""
 ### ___________________________________________________
 ### This prototype demonstrates:
-
 1. **Full lifecycle experience** - From problem definition to monitoring
 2. **Production deployment** - Real models in production via Jenkins
 3. **Causal inference expertise** - DiD from daily work at Zimmerman  
 4. **Business translation** - Converting technical results to revenue impact
 5. **Learning agility** - Built this in 24 hours after our first call
-
 
 Contact: gerardo.gandara@gmail.com | https://www.linkedin.com/in/gerardo-gandara
 """)
