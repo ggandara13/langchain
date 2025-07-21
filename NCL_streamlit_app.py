@@ -47,27 +47,43 @@ st.markdown("""
         font-size: 0.75rem !important;
     }
     
-    /* Target metric value - SMALLER FONT SIZE */
+    /* Target metric value - FORCE SMALLER AND DARK */
     [data-testid="metric-container"] [data-testid="stMetricValue"] {
         color: #0E1117 !important;
         font-weight: 600 !important;
-        font-size: 1rem !important;  /* Even smaller */
+        font-size: 0.875rem !important;
     }
     
-    /* Additional targeting for metric value text */
-    [data-testid="metric-container"] [data-testid="stMetricValue"] > div {
-        font-size: 1rem !important;
+    /* More specific targeting for the metric value div */
+    [data-testid="metric-container"] [data-testid="stMetricValue"] div {
+        font-size: 0.875rem !important;
+        color: #0E1117 !important;
         line-height: 1.2 !important;
     }
     
-    /* Specific fix for the stage name that appears cut off */
-    div[data-testid="column"] [data-testid="metric-container"]:first-child [data-testid="stMetricValue"] {
-        font-size: 0.9rem !important;
-        white-space: normal !important;
-        word-wrap: break-word !important;
+    /* Target the actual text inside metric value */
+    [data-testid="stMetricValue"] > div > span {
+        font-size: 0.875rem !important;
+        color: #0E1117 !important;
     }
     
-    /* Fix code blocks - CRITICAL FIX */
+    /* Force all text in metrics to be dark and smaller */
+    div[data-testid="metric-container"] * {
+        color: #0E1117 !important;
+        max-font-size: 1rem !important;
+    }
+    
+    /* Override any inline styles */
+    [data-testid="metric-container"] [style*="color"] {
+        color: #0E1117 !important;
+    }
+    
+    /* Fix white text specifically */
+    [data-testid="metric-container"] [style*="color: rgb(255, 255, 255)"] {
+        color: #0E1117 !important;
+    }
+    
+    /* Fix code blocks */
     .stCodeBlock, pre, code {
         background-color: #F5F5F5 !important;
         color: #0E1117 !important;
@@ -75,53 +91,23 @@ st.markdown("""
         border-radius: 6px !important;
     }
     
-    /* Fix code inside expanders specifically */
+    /* Fix code inside expanders */
     div[data-testid="stExpander"] .stCodeBlock {
         background-color: #F5F5F5 !important;
         color: #0E1117 !important;
     }
     
-    /* Fix pre and code tags */
-    pre {
-        background-color: #F5F5F5 !important;
-        color: #0E1117 !important;
-        padding: 1rem !important;
-    }
-    
-    code {
-        background-color: #F5F5F5 !important;
-        color: #0E1117 !important;
-    }
-    
-    /* Fix syntax highlighting in code blocks */
-    .stCodeBlock * {
-        background-color: transparent !important;
-    }
-    
-    /* Fix selectbox dropdown menu */
+    /* Fix selectbox dropdown */
     .stSelectbox [data-baseweb="select"] {
         background-color: #FFFFFF !important;
     }
     
-    /* Fix dropdown options */
     [data-baseweb="menu"] {
         background-color: #FFFFFF !important;
     }
     
-    /* Fix dropdown list items */
-    [role="listbox"] {
-        background-color: #FFFFFF !important;
-    }
-    
-    /* Fix individual dropdown options */
     [role="option"] {
         background-color: #FFFFFF !important;
-        color: #0E1117 !important;
-    }
-    
-    /* Hover state for dropdown options */
-    [role="option"]:hover {
-        background-color: #F0F2F6 !important;
         color: #0E1117 !important;
     }
     
@@ -136,32 +122,25 @@ st.markdown("""
         font-size: 0.9rem !important;
     }
     
-    /* Expander content area */
-    div[data-testid="stExpander"] div[role="region"] {
-        border: 1px solid #E0E0E0 !important;
-        border-top: none !important;
-        background-color: #FAFAFA !important;
-        padding: 1rem !important;
+    /* Force override any white color */
+    * {
+        color: #0E1117 !important;
     }
     
-    /* Fix sidebar */
-    section[data-testid="stSidebar"] {
-        background-color: #F0F2F6 !important;
+    /* But keep buttons white */
+    .stButton > button {
+        color: white !important;
     }
     
-    /* Fix sidebar text */
-    section[data-testid="stSidebar"] * {
-        color: #262730 !important;
-    }
-    
-    /* Ensure all text is dark */
-    .stMarkdown, .stText, p, h1, h2, h3, h4, h5, h6 {
-        color: #262730 !important;
-    }
-    
-    /* Success checkmark should stay green */
+    /* Keep checkmark green */
     [data-testid="stMetricValue"] svg {
         color: #21c354 !important;
+    }
+    
+    /* Additional force for metrics */
+    .css-1xarl3l, .css-1bt9eao, .css-1r6slb0 {
+        color: #0E1117 !important;
+        font-size: 0.875rem !important;
     }
 </style>
 """, unsafe_allow_html=True)
