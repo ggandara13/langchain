@@ -95,7 +95,7 @@ with col1:
         width=200
     )
 with col2:
-    st.title("     Pricing Intelligence Platform")
+    st.title("      - Pricing Intelligence Platform")
     st.markdown("     **Prototype by Gerardo Gandara | Senior Data Scientist Interview**")
     st.markdown("")
     st.markdown("")
