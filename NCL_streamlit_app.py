@@ -31,6 +31,34 @@ st.markdown("""
         color: #262730;
     }
     
+    /* Fix sidebar background */
+    section[data-testid="stSidebar"] {
+        background-color: #F0F2F6 !important;
+    }
+    
+    /* Fix sidebar selectbox specifically */
+    section[data-testid="stSidebar"] .stSelectbox > div > div {
+        background-color: #FFFFFF !important;
+        color: #0E1117 !important;
+        border: 1px solid #D3D3D3 !important;
+    }
+    
+    /* Fix sidebar selectbox label */
+    section[data-testid="stSidebar"] .stSelectbox label {
+        color: #0E1117 !important;
+        font-weight: 600 !important;
+    }
+    
+    /* Fix the dropdown arrow and input area */
+    section[data-testid="stSidebar"] [data-baseweb="select"] > div {
+        background-color: #FFFFFF !important;
+    }
+    
+    /* Fix dropdown text */
+    section[data-testid="stSidebar"] [data-baseweb="select"] * {
+        color: #0E1117 !important;
+    }
+    
     /* Fix metric containers */
     [data-testid="metric-container"] {
         background-color: #F0F2F6;
@@ -47,27 +75,19 @@ st.markdown("""
         font-size: 0.75rem !important;
     }
     
-    /* Target metric value - SMALLER FONT SIZE */
+    /* Target metric value */
     [data-testid="metric-container"] [data-testid="stMetricValue"] {
         color: #0E1117 !important;
         font-weight: 600 !important;
-        font-size: 1rem !important;  /* Even smaller */
+        font-size: 0.875rem !important;
     }
     
-    /* Additional targeting for metric value text */
-    [data-testid="metric-container"] [data-testid="stMetricValue"] > div {
-        font-size: 1rem !important;
-        line-height: 1.2 !important;
+    /* Force all text in metrics to be dark */
+    div[data-testid="metric-container"] * {
+        color: #0E1117 !important;
     }
     
-    /* Specific fix for the stage name that appears cut off */
-    div[data-testid="column"] [data-testid="metric-container"]:first-child [data-testid="stMetricValue"] {
-        font-size: 0.9rem !important;
-        white-space: normal !important;
-        word-wrap: break-word !important;
-    }
-    
-    /* Fix code blocks - CRITICAL FIX */
+    /* Fix code blocks */
     .stCodeBlock, pre, code {
         background-color: #F5F5F5 !important;
         color: #0E1117 !important;
@@ -75,53 +95,25 @@ st.markdown("""
         border-radius: 6px !important;
     }
     
-    /* Fix code inside expanders specifically */
-    div[data-testid="stExpander"] .stCodeBlock {
-        background-color: #F5F5F5 !important;
-        color: #0E1117 !important;
-    }
-    
-    /* Fix pre and code tags */
-    pre {
-        background-color: #F5F5F5 !important;
-        color: #0E1117 !important;
-        padding: 1rem !important;
-    }
-    
-    code {
-        background-color: #F5F5F5 !important;
-        color: #0E1117 !important;
-    }
-    
-    /* Fix syntax highlighting in code blocks */
-    .stCodeBlock * {
-        background-color: transparent !important;
-    }
-    
-    /* Fix selectbox dropdown menu */
+    /* Fix all selectbox dropdowns */
     .stSelectbox [data-baseweb="select"] {
         background-color: #FFFFFF !important;
     }
     
-    /* Fix dropdown options */
+    /* Fix dropdown menu */
     [data-baseweb="menu"] {
         background-color: #FFFFFF !important;
     }
     
-    /* Fix dropdown list items */
-    [role="listbox"] {
-        background-color: #FFFFFF !important;
-    }
-    
-    /* Fix individual dropdown options */
+    /* Fix dropdown options */
     [role="option"] {
         background-color: #FFFFFF !important;
         color: #0E1117 !important;
     }
     
-    /* Hover state for dropdown options */
+    /* Hover state */
     [role="option"]:hover {
-        background-color: #F0F2F6 !important;
+        background-color: #E6F3FF !important;
         color: #0E1117 !important;
     }
     
@@ -136,30 +128,17 @@ st.markdown("""
         font-size: 0.9rem !important;
     }
     
-    /* Expander content area */
-    div[data-testid="stExpander"] div[role="region"] {
-        border: 1px solid #E0E0E0 !important;
-        border-top: none !important;
-        background-color: #FAFAFA !important;
-        padding: 1rem !important;
+    /* Global text color override */
+    * {
+        color: #0E1117 !important;
     }
     
-    /* Fix sidebar */
-    section[data-testid="stSidebar"] {
-        background-color: #F0F2F6 !important;
+    /* Keep buttons white */
+    .stButton > button {
+        color: white !important;
     }
     
-    /* Fix sidebar text */
-    section[data-testid="stSidebar"] * {
-        color: #262730 !important;
-    }
-    
-    /* Ensure all text is dark */
-    .stMarkdown, .stText, p, h1, h2, h3, h4, h5, h6 {
-        color: #262730 !important;
-    }
-    
-    /* Success checkmark should stay green */
+    /* Keep checkmark green */
     [data-testid="stMetricValue"] svg {
         color: #21c354 !important;
     }
