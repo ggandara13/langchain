@@ -811,7 +811,7 @@ elif selected_module == "Price Optimization Engine":
             'current_occupancy': '{:.1%}',
             'price_change': '{:+.1f}%',
             'revenue_impact': '{:+.1f}%'
-        }).background_gradient(subset=['revenue_impact'], cmap='RdYlGn')
+        })
     )
     
     total_impact = sailings['revenue_impact'].mean()
