@@ -208,13 +208,30 @@ if selected_module == "Executive Dashboard":
                         title="Price vs Discount Strategy by Cruise Line",
                         labels={'discount': 'Discount %', 'final_price': 'Final Price ($)'},
                         size='occupancy', hover_data=['ship'])
-        
-        # Add this to fix the black background
+    
+
         fig.update_layout(
             plot_bgcolor='white',
             paper_bgcolor='white',
-            font=dict(color='black')
+            font=dict(color='#262730'),  # Darker gray for better contrast
+            xaxis=dict(
+                gridcolor='#E5E5E5',
+                title_font=dict(color='#262730'),
+                tickfont=dict(color='#262730')
+            ),
+            yaxis=dict(
+                gridcolor='#E5E5E5',
+                title_font=dict(color='#262730'),
+                tickfont=dict(color='#262730')
+            ),
+            title_font=dict(color='#262730')
         )
+
+
+
+
+
+        
         
         # Add zones
         fig.add_shape(type="rect", x0=0, x1=0.3, y0=1200, y1=1600,
@@ -264,8 +281,22 @@ if selected_module == "Executive Dashboard":
     fig.update_layout(
         plot_bgcolor='white',
         paper_bgcolor='white',
-        font=dict(color='black')
+        font=dict(color='#262730'),  # Darker gray for better contrast
+        xaxis=dict(
+            gridcolor='#E5E5E5',
+            title_font=dict(color='#262730'),
+            tickfont=dict(color='#262730')
+        ),
+        yaxis=dict(
+            gridcolor='#E5E5E5',
+            title_font=dict(color='#262730'),
+            tickfont=dict(color='#262730')
+        ),
+        title_font=dict(color='#262730')
     )
+
+
+    
     
     st.plotly_chart(fig, use_container_width=True)
 
@@ -857,8 +888,21 @@ else:  # A/B Testing
     fig.update_layout(
         plot_bgcolor='white',
         paper_bgcolor='white',
-        font=dict(color='black')
+        font=dict(color='#262730'),  # Darker gray for better contrast
+        xaxis=dict(
+            gridcolor='#E5E5E5',
+            title_font=dict(color='#262730'),
+            tickfont=dict(color='#262730')
+        ),
+        yaxis=dict(
+            gridcolor='#E5E5E5',
+            title_font=dict(color='#262730'),
+            tickfont=dict(color='#262730')
+        ),
+        title_font=dict(color='#262730')
     )
+
+    
     
     st.plotly_chart(fig, use_container_width=True)
     
