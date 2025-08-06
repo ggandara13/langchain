@@ -1,10 +1,11 @@
+--only-binary :all:  # Force pre-built wheels (no compilation)
 streamlit==1.38.0
-pandas==2.2.3
-numpy==1.26.4
-scikit-learn==1.3.2
-xgboost==2.0.3
-joblib==1.4.2
-plotly==5.23.0
-imbalanced-learn==0.11.0
-Pillow
-requests
+pandas==2.1.4        # More stable for Python 3.11
+numpy==1.24.4        # Compatible with XGBoost 2.0.3
+scikit-learn==1.3.2  # Lock to this version (critical for XGBoost)
+xgboost==2.0.3       # Your required version
+joblib==1.4.2        # For scikit-learn compatibility
+plotly==5.23.0       # Unlikely to cause issues
+imbalanced-learn==0.11.0  # Match scikit-learn version
+Pillow               # Keep as-is (no version pin)
+requests             # Keep as-is
