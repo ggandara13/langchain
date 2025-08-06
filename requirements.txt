@@ -4,3 +4,7 @@ numpy
 plotly==5.23.0
 joblib
 scikit-learn
+xgboost
+imbalanced-learn
+Pillow
+requests
