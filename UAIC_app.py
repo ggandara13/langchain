@@ -1,6 +1,5 @@
 # Insurance Claims Prediction App - UAIC Interview Prototype
-# Run with: streamlit run insurance_app.py
-
+# Run with: streamlit run uaic_app.py
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -9,6 +8,7 @@ import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 import joblib
 import warnings
+import os
 warnings.filterwarnings('ignore')
 
 # Page configuration
@@ -19,51 +19,58 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-
-
-
-
-
 from PIL import Image
 import requests
 from io import BytesIO
 
 @st.cache_data
 def load_logo(url):
-    response = requests.get(url)
-    return Image.open(BytesIO(response.content))
+    try:
+        response = requests.get(url)
+        return Image.open(BytesIO(response.content))
+    except:
+        return None
 
 logo = load_logo("https://media.licdn.com/dms/image/v2/D4E0BAQGLXhmzM12fkw/company-logo_200_200/company-logo_200_200/0/1697211908483?e=2147483647&v=beta&t=I6IM4RHTXJr58IGJ3DmWYjmOFkM3EeZMOopW5H8tdko")
 
 # Create columns for logo + title
-col1, col2 = st.columns([4, 2])  # Adjust ratio as needed
+col1, col2 = st.columns([1, 4])  # Adjusted ratio
 with col1:
-    st.image(logo, width=200)  # Adjust width as needed
+    if logo:
+        st.image(logo, width=150)
 with col2:
     st.markdown("""
-    <div style="display: flex; flex-direction: column; justify-content: center; height: 100%;">
-        <h1 class="main-header">UAIC Insurance Claims Predictor</h1>
-        <p style="font-size: 1.2rem; color: #666; margin-top: -0.5rem;">
-            Advanced ML Model for Actuarial Decision Making
-        </p>
-    </div>
+    <h1 style="color: #1f77b4; margin-top: 0;">UAIC Insurance Claims Predictor</h1>
+    <p style="font-size: 1.2rem; color: #666;">
+        Advanced ML Model for Actuarial Decision Making
+    </p>
     """, unsafe_allow_html=True)
 
-
-
-
-
-
-# Custom CSS for professional styling
+# Custom CSS for professional styling with white background
 st.markdown("""
 <style>
+    /* Force white background */
+    .stApp {
+        background-color: white;
+    }
+    
+    /* Main content area */
+    .main {
+        background-color: white;
+    }
+    
+    /* Sidebar */
+    section[data-testid="stSidebar"] {
+        background-color: #f8f9fa;
+    }
+    
     .main-header {
-        font-size: 3rem;
+        font-size: 2.5rem;
         color: #1f77b4;
-        text-align: center;
-        margin-bottom: 2rem;
+        margin-bottom: 1rem;
         font-weight: bold;
     }
+    
     .metric-card {
         background-color: #f0f2f6;
         padding: 1rem;
@@ -71,26 +78,32 @@ st.markdown("""
         border-left: 4px solid #1f77b4;
         margin: 0.5rem 0;
     }
+    
     .risk-high {
         background-color: #ffebee;
         border-left-color: #f44336;
     }
+    
     .risk-medium-high {
         background-color: #fff3e0;
         border-left-color: #ff5722;
     }
+    
     .risk-medium {
         background-color: #fff3e0;
         border-left-color: #ff9800;
     }
+    
     .risk-medium-low {
         background-color: #f1f8e9;
         border-left-color: #8bc34a;
     }
+    
     .risk-low {
         background-color: #e8f5e8;
         border-left-color: #4caf50;
     }
+    
     .insight-box {
         background-color: #e3f2fd;
         padding: 1rem;
@@ -98,49 +111,54 @@ st.markdown("""
         margin: 1rem 0;
         border-left: 4px solid #2196f3;
     }
+    
+    /* Fix for dark mode text */
+    .stMarkdown, .stText, p, h1, h2, h3, h4, h5, h6, label {
+        color: #262730 !important;
+    }
 </style>
 """, unsafe_allow_html=True)
-
-
-
-
-
 
 # Production Insurance Model Class
 class ProductionInsuranceModel:
     def __init__(self):
+        # Initialize all attributes first
+        self.demo_mode = True  # Default to demo mode
+        self.pipeline = None
+        self.components = None
+        self.selected_features = ['policy_tenure', 'population_density', 'make', 'cylinder', 
+                                 'gear_box', 'height', 'gross_weight', 'ncap_rating',
+                                 'experience_factor', 'car_age_risk', 'airbag_deficit', 'safety_score']
+        self.age_scaling = {'min': 0.288, 'max': 1.0}
+        self.scale_factor = 0.224
+        
+        # Try to load model files
         try:
-            print("Loading model files...")
-            self.pipeline = joblib.load('calibrated_pipeline.joblib')
-            self.components = joblib.load('calibrated_components.joblib')
-            
-            # Debug: Check what was loaded
-            print(f"Pipeline type: {type(self.pipeline)}")
-            print(f"Components keys: {self.components.keys() if isinstance(self.components, dict) else 'Not a dict'}")
-            print(f"Selected features: {self.components.get('selected_features', 'Not found')}")
-            
-            self.selected_features = self.components['selected_features']
-            self.age_scaling = self.components['age_scaling']
-            
-            # Add a success flag
-            self.demo_mode = False
-            print("Model loaded successfully!")
-            
+            if os.path.exists('calibrated_pipeline.joblib') and os.path.exists('calibrated_components.joblib'):
+                self.pipeline = joblib.load('calibrated_pipeline.joblib')
+                self.components = joblib.load('calibrated_components.joblib')
+                
+                # Update from loaded components
+                if isinstance(self.components, dict):
+                    self.selected_features = self.components.get('selected_features', self.selected_features)
+                    self.age_scaling = self.components.get('age_scaling', self.age_scaling)
+                    self.scale_factor = self.components.get('scale_factor', self.scale_factor)
+                    self.demo_mode = False
+                    st.success("✅ Model loaded successfully!")
+                else:
+                    st.warning("⚠️ Model components format unexpected. Using demo mode.")
+            else:
+                st.warning("⚠️ Model files not found. Using demo mode.")
         except Exception as e:
-            print(f"Error loading model: {e}")
-            st.error(f"Model files not found or corrupted: {e}")
+            st.error(f"❌ Error loading model: {str(e)}")
+            st.info("Using demo mode for predictions.")
+            # Ensure demo_mode stays True on error
             self.demo_mode = True
-            self.selected_features = ['policy_tenure', 'population_density', 'make', 'cylinder', 
-                                     'gear_box', 'height', 'gross_weight', 'ncap_rating',
-                                     'experience_factor', 'car_age_risk', 'airbag_deficit', 'safety_score']
-
-
     
     def prepare_features(self, **inputs):
         """Prepare all features including engineered ones"""
         
         # Scale age from years to model format (0.288 to 1.0)
-        # Assuming 18 years = 0.288, 80 years = 1.0
         age_scaled = 0.288 + (inputs['age_of_policyholder'] - 18) * (1.0 - 0.288) / (80 - 18)
         
         # Calculate actual age for experience factor
@@ -230,30 +248,59 @@ class ProductionInsuranceModel:
     def predict_with_explanation(self, **inputs):
         """Get prediction with full explanation"""
         
-        if hasattr(self, 'demo_mode'):
-            # Demo mode - return reasonable mock values
-            base_prob = 0.35
-            calibrated_prob = 0.08
-            multiplier = 1.0
-            factors = {}
+        # Calculate business rule multipliers
+        multiplier, factors = self.calculate_risk_multipliers(
+            inputs['age_of_car'],
+            inputs['age_of_policyholder'],
+            inputs['policy_tenure'],
+            inputs['population_density'],
+            inputs['safety_score']
+        )
+        
+        if self.demo_mode:
+            # Demo mode - return reasonable mock values based on inputs
+            # Base probability varies with risk factors
+            base_prob = 0.06  # Start with average claim rate
+            
+            # Adjust based on key factors
+            if inputs['age_of_policyholder'] < 25:
+                base_prob *= 2.5
+            elif inputs['age_of_policyholder'] < 30:
+                base_prob *= 1.5
+                
+            if inputs['age_of_car'] > 10:
+                base_prob *= 1.8
+            elif inputs['age_of_car'] > 5:
+                base_prob *= 1.3
+                
+            if inputs['policy_tenure'] < 1:
+                base_prob *= 1.4
+                
+            if inputs['population_density'] > 50000:
+                base_prob *= 1.3
+                
+            if inputs['safety_score'] < 5:
+                base_prob *= 1.5
+                
+            # Cap the base probability
+            base_prob = min(base_prob, 0.35)
+            calibrated_prob = base_prob
         else:
-            # Prepare features
-            features_df, actual_age = self.prepare_features(**inputs)
-            
-            # Get base model prediction
-            base_prob = self.pipeline.predict_proba(features_df)[0, 1]
-            
-            # Apply basic calibration
-            calibrated_prob = base_prob * self.components['scale_factor']
-            
-            # Calculate business rule multipliers
-            multiplier, factors = self.calculate_risk_multipliers(
-                inputs['age_of_car'],
-                inputs['age_of_policyholder'],
-                inputs['policy_tenure'],
-                inputs['population_density'],
-                inputs['safety_score']
-            )
+            # Real model mode
+            try:
+                # Prepare features
+                features_df, actual_age = self.prepare_features(**inputs)
+                
+                # Get base model prediction
+                base_prob = self.pipeline.predict_proba(features_df)[0, 1]
+                
+                # Apply calibration
+                calibrated_prob = base_prob * self.scale_factor
+            except Exception as e:
+                st.error(f"Prediction error: {str(e)}")
+                # Fallback to demo mode calculation
+                base_prob = 0.06
+                calibrated_prob = base_prob
         
         # Apply business rules
         final_prob = calibrated_prob * multiplier
@@ -293,17 +340,8 @@ class ProductionInsuranceModel:
             'driver_age': inputs['age_of_policyholder']
         }
 
-# Load the model
-@st.cache_resource
-def load_model():
-    return ProductionInsuranceModel()
-
-model = load_model()
-
-
-
-
-
+# Load the model without caching to avoid initialization issues
+model = ProductionInsuranceModel()
 
 # Sidebar navigation
 st.sidebar.title("Navigation")
@@ -314,6 +352,15 @@ page = st.sidebar.selectbox("Choose a section:", [
     "📈 Portfolio Analysis",
     "💼 Business Insights"
 ])
+
+# Model status indicator - only check if model is loaded
+if hasattr(model, 'demo_mode'):
+    if model.demo_mode:
+        st.sidebar.warning("📍 Model Status: Demo Mode")
+    else:
+        st.sidebar.success("📍 Model Status: Live")
+else:
+    st.sidebar.error("📍 Model Status: Error")
 
 # Add quick stats to sidebar
 st.sidebar.markdown("---")
@@ -333,14 +380,13 @@ st.sidebar.info("""
 - Risk levels are calibrated to actual claim rates
 """)
 
-# Add reset button
-if st.sidebar.button("🔄 Reset All Inputs"):
-    for key in list(st.session_state.keys()):
-        del st.session_state[key]
-    st.rerun()
-
+# Main content based on page selection
 if page == "🏠 Home & Overview":
     st.header("Model Overview")
+    
+    # Model status alert
+    if hasattr(model, 'demo_mode') and model.demo_mode:
+        st.warning("**Model files not found. Using demo mode.**")
     
     # Add performance note
     st.info("""
@@ -415,7 +461,7 @@ if page == "🏠 Home & Overview":
                     'thickness': 0.75,
                     'value': 70}}))
         
-        fig.update_layout(height=400)
+        fig.update_layout(height=400, paper_bgcolor="white", plot_bgcolor="white")
         st.plotly_chart(fig, use_container_width=True)
     
     with tab2:
@@ -448,7 +494,7 @@ if page == "🏠 Home & Overview":
                              'Safety': '#9467bd'
                          })
             
-            fig.update_layout(height=400, showlegend=True)
+            fig.update_layout(height=400, showlegend=True, paper_bgcolor="white", plot_bgcolor="white")
             st.plotly_chart(fig, use_container_width=True)
         
         with col2:
@@ -467,7 +513,7 @@ if page == "🏠 Home & Overview":
                             'Safety': '#9467bd'
                         })
             
-            fig.update_layout(height=400)
+            fig.update_layout(height=400, paper_bgcolor="white", plot_bgcolor="white")
             st.plotly_chart(fig, use_container_width=True)
     
     with tab3:
@@ -484,80 +530,11 @@ if page == "🏠 Home & Overview":
         </div>
         """, unsafe_allow_html=True)
 
-elif page == "📊 Model Performance":
-    st.header("Model Performance Analysis")
-    
-    # Add explanation
-    st.warning("""
-    **Important**: The model was trained using SMOTE to handle class imbalance. This results in different 
-    performance metrics on balanced vs real-world data. Both metrics are important for different purposes.
-    """)
-    
-    # Performance comparison
-    st.subheader("🏆 Performance Metrics")
-    
-    comparison_data = {
-        'Metric': ['AUC-ROC', 'Accuracy', 'F1-Score', 'Test Set Type'],
-        'Balanced Test Set': [96.04, 90.43, 92.76, '50/50 Claims'],
-        'Real-World Test Set': [78.79, 89.92, 'N/A', '6.4% Claims'],
-        'Difference': [-17.25, -0.51, 'N/A', 'N/A']
-    }
-    
-    df_comparison = pd.DataFrame(comparison_data)
-    
-    col1, col2 = st.columns(2)
-    
-    with col1:
-        fig = go.Figure()
-        
-        metrics = ['AUC-ROC', 'Accuracy']
-        balanced = [96.04, 90.43]
-        real_world = [78.79, 89.92]
-        
-        fig.add_trace(go.Bar(
-            name='Balanced Test Set',
-            x=metrics,
-            y=balanced,
-            marker_color='lightblue'
-        ))
-        
-        fig.add_trace(go.Bar(
-            name='Real-World Test Set',
-            x=metrics,
-            y=real_world,
-            marker_color='darkblue'
-        ))
-        
-        fig.update_layout(
-            title="Performance Comparison",
-            yaxis_title="Score (%)",
-            barmode='group',
-            height=400
-        )
-        
-        st.plotly_chart(fig, use_container_width=True)
-    
-    with col2:
-        st.markdown("### 🎯 Model Characteristics")
-        st.markdown("""
-        **✅ Balanced Test Performance:**
-        - **96% AUC**: Excellent discrimination
-        - **90% Accuracy**: High precision
-        - Optimized for claim detection
-        
-        **✅ Real-World Performance:**
-        - **79% AUC**: Strong real-world discrimination
-        - **90% Accuracy**: Maintained accuracy
-        - Calibrated for actual probabilities
-        
-        **✅ Production Enhancements:**
-        - Business rules for sensible predictions
-        - Probability calibration
-        - Explainable risk factors
-        """)
-
 elif page == "🎯 Risk Prediction":
     st.header("Individual Risk Assessment")
+    
+    if hasattr(model, 'demo_mode') and model.demo_mode:
+        st.warning("⚠️ Model files not found. Using demo mode predictions.")
     
     st.markdown("""
     <div class="insight-box">
@@ -635,7 +612,8 @@ elif page == "🎯 Risk Prediction":
         age_of_policyholder = st.slider("Driver Age", 18, 80, default_age)
         
         st.markdown("**Geographic Information**")
-        location_type = st.selectbox("Location Type", ["Rural", "Suburban", "Urban"])
+        location_type = st.selectbox("Location Type", ["Rural", "Suburban", "Urban"], 
+                                     index=["Rural", "Suburban", "Urban"].index(default_location))
         
         # Use actual population density values
         location_mapping = {"Rural": 290, "Suburban": 8794, "Urban": 73430}
@@ -787,6 +765,71 @@ elif page == "🎯 Risk Prediction":
     imbalance and calibrated for real-world probability estimation.
     """)
 
+elif page == "📊 Model Performance":
+    st.header("Model Performance Analysis")
+    
+    # Add explanation
+    st.warning("""
+    **Important**: The model was trained using SMOTE to handle class imbalance. This results in different 
+    performance metrics on balanced vs real-world data. Both metrics are important for different purposes.
+    """)
+    
+    # Performance comparison
+    st.subheader("🏆 Performance Metrics")
+    
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        fig = go.Figure()
+        
+        metrics = ['AUC-ROC', 'Accuracy']
+        balanced = [96.04, 90.43]
+        real_world = [78.79, 89.92]
+        
+        fig.add_trace(go.Bar(
+            name='Balanced Test Set',
+            x=metrics,
+            y=balanced,
+            marker_color='lightblue'
+        ))
+        
+        fig.add_trace(go.Bar(
+            name='Real-World Test Set',
+            x=metrics,
+            y=real_world,
+            marker_color='darkblue'
+        ))
+        
+        fig.update_layout(
+            title="Performance Comparison",
+            yaxis_title="Score (%)",
+            barmode='group',
+            height=400,
+            paper_bgcolor="white",
+            plot_bgcolor="white"
+        )
+        
+        st.plotly_chart(fig, use_container_width=True)
+    
+    with col2:
+        st.markdown("### 🎯 Model Characteristics")
+        st.markdown("""
+        **✅ Balanced Test Performance:**
+        - **96% AUC**: Excellent discrimination
+        - **90% Accuracy**: High precision
+        - Optimized for claim detection
+        
+        **✅ Real-World Performance:**
+        - **79% AUC**: Strong real-world discrimination
+        - **90% Accuracy**: Maintained accuracy
+        - Calibrated for actual probabilities
+        
+        **✅ Production Enhancements:**
+        - Business rules for sensible predictions
+        - Probability calibration
+        - Explainable risk factors
+        """)
+
 elif page == "📈 Portfolio Analysis":
     st.header("Portfolio Risk Management")
     
@@ -797,16 +840,14 @@ elif page == "📈 Portfolio Analysis":
     n_policies = 10000
     
     # Generate realistic risk distribution based on model
-    # Using beta distribution to match real claim patterns
     base_probs = np.random.beta(2, 30, n_policies)
     
     # Apply business rules to adjust probabilities
     ages = np.random.randint(18, 70, n_policies)
     car_ages = np.random.exponential(5, n_policies)
     
-    # Adjust for young drivers
+    # Adjust for young drivers and old cars
     young_driver_mult = np.where(ages < 25, 2.0, 1.0)
-    # Adjust for old cars
     old_car_mult = np.where(car_ages > 10, 1.5, 1.0)
     
     # Final probabilities
@@ -844,6 +885,7 @@ elif page == "📈 Portfolio Analysis":
             labels={'x': 'Claim Probability (%)', 'y': 'Number of Policies'}
         )
         fig.update_traces(marker_color='lightblue')
+        fig.update_layout(paper_bgcolor="white", plot_bgcolor="white")
         st.plotly_chart(fig, use_container_width=True)
     
     with col2:
@@ -866,6 +908,7 @@ elif page == "📈 Portfolio Analysis":
                 'HIGH': '#f44336'
             }
         )
+        fig.update_layout(paper_bgcolor="white", plot_bgcolor="white")
         st.plotly_chart(fig, use_container_width=True)
 
 elif page == "💼 Business Insights":
