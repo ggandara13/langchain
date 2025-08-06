@@ -101,28 +101,40 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
+
+
+
+
+
 # Production Insurance Model Class
 class ProductionInsuranceModel:
-    """
-    Production-ready model that combines:
-    1. High-AUC SMOTE model (0.79)
-    2. Probability calibration
-    3. Business rules for sensible predictions
-    """
-    
     def __init__(self):
         try:
+            print("Loading model files...")
             self.pipeline = joblib.load('calibrated_pipeline.joblib')
             self.components = joblib.load('calibrated_components.joblib')
+            
+            # Debug: Check what was loaded
+            print(f"Pipeline type: {type(self.pipeline)}")
+            print(f"Components keys: {self.components.keys() if isinstance(self.components, dict) else 'Not a dict'}")
+            print(f"Selected features: {self.components.get('selected_features', 'Not found')}")
+            
             self.selected_features = self.components['selected_features']
             self.age_scaling = self.components['age_scaling']
-        except:
-            # Fallback if files not found
-            st.error("Model files not found. Using demo mode.")
+            
+            # Add a success flag
+            self.demo_mode = False
+            print("Model loaded successfully!")
+            
+        except Exception as e:
+            print(f"Error loading model: {e}")
+            st.error(f"Model files not found or corrupted: {e}")
             self.demo_mode = True
             self.selected_features = ['policy_tenure', 'population_density', 'make', 'cylinder', 
                                      'gear_box', 'height', 'gross_weight', 'ncap_rating',
                                      'experience_factor', 'car_age_risk', 'airbag_deficit', 'safety_score']
+
+
     
     def prepare_features(self, **inputs):
         """Prepare all features including engineered ones"""
